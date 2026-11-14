@@ -1,0 +1,40 @@
+@startuml
+class SignBridgeApp {
+  +capture_image()
+  +upload_image()
+  +add_gloss(label)
+  +clear_sequence()
+  +generate_text()
+}
+class LandmarkExtractor {
+  +extract_hand_features(image) : Vector[63]
+}
+class SignClassifier {
+  -model_path : Path
+  +load()
+  +predict(features) : Prediction
+}
+class GlossTranslator {
+  -model_name : String
+  +format_glosses(glosses) : String
+  +transformer_gloss_to_text(glosses) : String
+}
+class SpeechService {
+  +synthesize(text) : AudioFile
+}
+class DatasetCollector {
+  +capture_sample(label)
+  +save_csv()
+}
+class ModelTrainer {
+  +load_dataset()
+  +train()
+  +evaluate()
+}
+SignBridgeApp --> LandmarkExtractor
+SignBridgeApp --> SignClassifier
+SignBridgeApp --> GlossTranslator
+SignBridgeApp --> SpeechService
+DatasetCollector --> LandmarkExtractor
+ModelTrainer --> SignClassifier
+@enduml

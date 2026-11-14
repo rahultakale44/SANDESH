@@ -1,0 +1,1 @@
+Place team-collected landmark CSV here. Do not commit personal videos or identifiable data without explicit consent. The collector writes `landmarks.csv`.

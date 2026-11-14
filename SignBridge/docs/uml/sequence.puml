@@ -1,0 +1,28 @@
+@startuml
+actor User
+participant "Streamlit UI" as UI
+participant "Landmark Extractor" as LM
+participant "Sign Classifier" as CL
+participant "Gloss Translator" as TR
+participant "Text-to-Speech" as TTS
+User -> UI : Capture/upload image
+UI -> LM : extract_hand_features(image)
+LM --> UI : feature vector / no hand
+alt hand detected and model available
+  UI -> CL : predict_sign(features)
+  CL --> UI : label, confidence
+  UI --> User : Display prediction
+  User -> UI : Add label(s), generate text
+  UI -> TR : gloss_to_text(sequence)
+  TR --> UI : English sentence
+  UI --> User : Display sentence
+  opt speech requested
+    User -> UI : Generate speech
+    UI -> TTS : synthesize(sentence)
+    TTS --> UI : audio file / unavailable
+    UI --> User : Play audio / show warning
+  end
+else no hand or no model
+  UI --> User : Show actionable error
+end
+@enduml

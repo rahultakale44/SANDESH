@@ -1,0 +1,26 @@
+@startuml
+skinparam componentStyle rectangle
+actor User
+component "Streamlit Web UI" as UI
+component "OpenCV / Camera Input" as CAM
+component "MediaPipe Hands\n21 landmarks" as MP
+component "Feature Normalization" as FE
+component "Trained Random Forest\nISL isolated-sign classifier" as RF
+component "Gloss Sequence" as GS
+component "Pre-trained FLAN-T5\n(optional gloss-to-English)" as T5
+component "pyttsx3 TTS\n(optional)" as TTS
+database "Team-collected\nlabelled landmark CSV" as DATA
+component "Training Script" as TRAIN
+User --> UI
+UI --> CAM
+CAM --> MP
+MP --> FE
+FE --> RF
+RF --> UI : predicted gloss
+UI --> GS
+GS --> T5
+T5 --> UI : English text
+UI --> TTS
+DATA --> TRAIN
+TRAIN --> RF : model artifact
+@enduml

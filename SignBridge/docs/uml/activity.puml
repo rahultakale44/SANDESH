@@ -1,0 +1,30 @@
+@startuml
+start
+:Open SignBridge;
+:Capture or upload image;
+:Load image and extract hand landmarks;
+if (Hand detected?) then (yes)
+  :Normalize landmarks;
+  if (Trained model exists?) then (yes)
+    :Predict supported sign label;
+    :Display label and confidence;
+    :Add label to gloss sequence;
+    if (Generate text?) then (yes)
+      if (Transformer enabled?) then (yes)
+        :FLAN-T5 gloss-to-English generation;
+      else (no)
+        :Deterministic gloss formatter;
+      endif
+      :Display English text;
+      if (Speech requested?) then (yes)
+        :Generate and play TTS audio;
+      endif
+    endif
+  else (no)
+    :Show instructions to collect data and train;
+  endif
+else (no)
+  :Show no-hand-detected message;
+endif
+stop
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+left to right direction
+actor "End User" as User
+actor "Project Developer" as Dev
+rectangle SignBridge {
+  usecase "Capture / Upload\nGesture Image" as UC1
+  usecase "View Hand\nDetection" as UC2
+  usecase "Recognize Supported\nISL Sign" as UC3
+  usecase "Build Gloss\nSequence" as UC4
+  usecase "Generate English\nText" as UC5
+  usecase "Play Speech\nOutput" as UC6
+  usecase "Collect Labelled\nSamples" as UC7
+  usecase "Train Classifier" as UC8
+  usecase "Evaluate Model" as UC9
+}
+User --> UC1
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+Dev --> UC7
+Dev --> UC8
+Dev --> UC9
+UC1 .> UC2 : <<include>>
+UC3 .> UC2 : <<include>>
+UC5 .> UC4 : <<include>>
+UC6 .> UC5 : <<extend>>
+@enduml

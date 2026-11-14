@@ -1,0 +1,1 @@
+Trained model artifacts are generated here by `python scripts/train_model.py`. No pretrained ISL classifier weights are bundled.
